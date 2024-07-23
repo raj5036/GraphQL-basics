@@ -31,6 +31,17 @@ const resolvers = {
 			db.games.push(game)
 			return game
 		},
+		updateGame(parent, args) {
+			const game = db.games.find(game => game.id === args.id)
+			if (!game) {
+				throw new Error("Game not found")
+			}	
+
+			game.title = args.input.title
+			game.platform = args.input.platform
+
+			return game
+		},
 		deleteGame(parent, args) {
 			db.games = db.games.filter(game => game.id !== args.id)
 			return db.games
